@@ -1,0 +1,29 @@
+version: "2"
+services:
+  #grafana:
+  #  build: grafana/
+  #graphite:
+  #  build: graphite/
+  icinga2:
+    env_file:
+      - ./proxy.env
+    build: 
+      context: ./icinga2
+      dockerfile: Dockerfile
+      args:
+        http_proxy: ""
+        https_proxy: ""
+#        buildno: 1
+#        password: welcome
+    container_name: icinga2
+    depends_on:
+      - data
+    links: 
+      - data
+  #icingaweb2:
+  #  build: icingaweb2/
+  #postgres:
+  #  build: postgres/
+  data:
+    image: busybox
+    container_name: data
